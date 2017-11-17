@@ -176,15 +176,39 @@ def number_segmentation(img_rgb):
         crop = img[(y-1):(y+h+2), (x-1):(x+w+1)]
     
 
+        print "#"*10
+        print crop.shape
+        row, col = crop.shape
+        npad = int(row/10)
+        pad = np.zeros((npad,col), np.uint8)
+        crop = np.vstack((crop,pad))
+        crop = np.vstack((pad,crop))
+        row, col = crop.shape
+        npad = int((row-col)/2)
+        pad = np.zeros((row,npad), np.uint8)
+        crop = np.hstack((crop,pad))
+        crop = np.hstack((pad,crop))
+        print crop.shape
+        
+
         res = cv2.resize(crop,(28,28), interpolation = cv2.INTER_AREA)
+        print res.shape
+
         kernel = np.ones((2,2), np.uint8)
-        res = cv2.erode(res,kernel,iterations = 2)
+        res = cv2.dilate(res,kernel,iterations = 2)
+
+        kernel = np.ones((2,2), np.uint8)
+        res = cv2.erode(res,kernel,iterations = 3)
+
+        kernel = np.ones((5,5), np.uint8)
+        res = cv2.morphologyEx(res, cv2.MORPH_CLOSE, kernel)
+        
+        print "#"*10
         # kernel = np.ones((1,1), np.uint8)
         # res = cv2.morphologyEx(res, cv2.MORPH_OPEN, kernel)
         # kernel = np.ones((2,2), np.uint8)
         # res = cv2.morphologyEx(res, cv2.MORPH_CLOSE, kernel)
-        kernel = np.ones((2,2), np.uint8)
-        res = cv2.dilate(res,kernel,iterations = 1)
+        
         res = deskew(res)
         cv2.imwrite("angka-" + str(i) + ".jpg", res)
         list_angka.append(res)
