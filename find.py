@@ -282,9 +282,9 @@ cv2.imshow('sebelum di crop',copy_img)
 masked_img_rgb = crop_plat(kumpulan_x,kumpulan_y,kumpulan_w,kumpulan_h,x_area,y_area,copy_img)
 
 
-list_angka = number_segmentation(masked_img_rgb)
+list_angka, list_angka_orig = number_segmentation(masked_img_rgb)
 
-prediksi = predict_plate(list_angka)
+prediksi = predict_plate(list_angka_orig, mnist=False)
 
 print("nomor plat =" + prediksi)
 cv2.putText(copy_img, str(prediksi), (20, 40),
