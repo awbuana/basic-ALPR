@@ -280,10 +280,15 @@ y_area = vertical_img_proc(thresh_image)
 cv2.imshow('sebelum di crop',copy_img)
 #masked_img_binary = crop_plat(kumpulan_x,kumpulan_y,kumpulan_w,kumpulan_h,x_area,y_area,thresh_image)
 masked_img_rgb = crop_plat(kumpulan_x,kumpulan_y,kumpulan_w,kumpulan_h,x_area,y_area,copy_img)
-cv2.waitKey()
+
 
 list_angka = number_segmentation(masked_img_rgb)
 
 prediksi = predict_plate(list_angka)
 
 print("nomor plat =" + prediksi)
+cv2.putText(copy_img, str(prediksi), (20, 40),
+	cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0, 0, 255), 2)
+
+cv2.imshow('hasil akhir',copy_img)
+cv2.waitKey()

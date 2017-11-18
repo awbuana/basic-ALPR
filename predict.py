@@ -88,6 +88,6 @@ def predict_plate(list_angka):
 
         prediction = model.predict(np.array([img]))
         hasil = prediction.argmax(axis=1)
-        prediksi = prediksi + str(hasil)
+        prediksi = prediksi + str(hasil[0])
 
     return prediksi
