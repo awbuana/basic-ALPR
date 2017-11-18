@@ -162,6 +162,7 @@ def number_segmentation(img_rgb):
             break
     
     list_angka=[]
+    list_angka_orig = []
 
     cv2.drawContours(img_rgb, cnts, -1, (0, 255, 0), 1)
     cv2.imshow("threshold seg", img_rgb)
@@ -174,25 +175,27 @@ def number_segmentation(img_rgb):
         # cv2.imshow("image plat"+str(i),img[y:y+h, x:x+w])
         # cv2.waitKey()
         crop = img[(y-1):(y+h+2), (x-1):(x+w+1)]
-    
+        orig = cv2.resize(crop,(28,28), interpolation = cv2.INTER_AREA)
+        cv2.imwrite("orig-" + str(i) + ".jpg", orig)
+        list_angka_orig.append(orig)
 
-        print "#"*10
-        print crop.shape
-        row, col = crop.shape
-        npad = int(row/10)
-        pad = np.zeros((npad,col), np.uint8)
-        crop = np.vstack((crop,pad))
-        crop = np.vstack((pad,crop))
-        row, col = crop.shape
-        npad = int((row-col)/2)
-        pad = np.zeros((row,npad), np.uint8)
-        crop = np.hstack((crop,pad))
-        crop = np.hstack((pad,crop))
-        print crop.shape
-        
+        # print "#"*10
+        # print crop.shape
+        # row, col = crop.shape
+        # npad = int(row/10)
+        # pad = np.zeros((npad,col), np.uint8)
+        # crop = np.vstack((crop,pad))
+        # crop = np.vstack((pad,crop))
+        # row, col = crop.shape
+        # npad = int((row-col)/2)
+        # pad = np.zeros((row,npad), np.uint8)
+        # crop = np.hstack((crop,pad))
+        # crop = np.hstack((pad,crop))
+        # print crop.shape
+        # print "#"*10
 
         res = cv2.resize(crop,(28,28), interpolation = cv2.INTER_AREA)
-        print res.shape
+        # print res.shape
 
         kernel = np.ones((2,2), np.uint8)
         res = cv2.dilate(res,kernel,iterations = 2)
@@ -203,7 +206,7 @@ def number_segmentation(img_rgb):
         kernel = np.ones((5,5), np.uint8)
         res = cv2.morphologyEx(res, cv2.MORPH_CLOSE, kernel)
         
-        print "#"*10
+        
         # kernel = np.ones((1,1), np.uint8)
         # res = cv2.morphologyEx(res, cv2.MORPH_OPEN, kernel)
         # kernel = np.ones((2,2), np.uint8)
@@ -225,5 +228,5 @@ def number_segmentation(img_rgb):
     
     cv2.waitKey(0)
 
-    return list_angka
+    return (list_angka, list_angka_orig)
 

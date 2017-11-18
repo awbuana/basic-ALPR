@@ -77,17 +77,75 @@ model.compile(loss=keras.losses.categorical_crossentropy,
               metrics=['accuracy'])
 model.load_weights("model_weights_5_convnetjs.h5")
 
-def predict_plate(list_angka):
-    prediksi = ""
-    for i in range(len(list_angka)):
-        img = list_angka[i]
-        ret, img= cv2.threshold(img,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)
-        img = img.reshape(28,28,1)
-        img = img.astype('float32')
-        img /= 255
+def predict_plate(list_angka, mnist=True):
+    if mnist:
+        prediksi = ""
+        for i in range(len(list_angka)):
+            img = list_angka[i]
+            ret, img= cv2.threshold(img,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)
+            img = img.reshape(28,28,1)
+            img = img.astype('float32')
+            img /= 255
 
-        prediction = model.predict(np.array([img]))
-        hasil = prediction.argmax(axis=1)
-        prediksi = prediksi + str(hasil)
+            prediction = model.predict(np.array([img]))
+            hasil = prediction.argmax(axis=1)
+            prediksi = prediksi + str(hasil)
 
-    return prediksi
+        return prediksi
+
+    else:
+        prediksi = ""
+        for i in range(len(list_angka)):
+            img = list_angka[i]
+
+            templates = []
+            angka0 = cv2.imread('angka/0.jpg', 0)
+            angka0 = cv2.resize(angka0,(28,28), interpolation = cv2.INTER_AREA)
+            templates.append(angka0)
+            angka1 = cv2.imread('angka/1.jpg', 0)
+            angka1 = cv2.resize(angka1,(28,28), interpolation = cv2.INTER_AREA)
+            templates.append(angka1)
+            angka2 = cv2.imread('angka/2.jpg', 0)
+            angka2 = cv2.resize(angka2,(28,28), interpolation = cv2.INTER_AREA)
+            templates.append(angka2)
+            angka3 = cv2.imread('angka/3.jpg', 0)
+            angka3 = cv2.resize(angka3,(28,28), interpolation = cv2.INTER_AREA)
+            templates.append(angka3)
+            angka4 = cv2.imread('angka/4.jpg', 0)
+            angka4 = cv2.resize(angka4,(28,28), interpolation = cv2.INTER_AREA)
+            templates.append(angka4)
+            angka5 = cv2.imread('angka/5.jpg', 0)
+            angka5 = cv2.resize(angka5,(28,28), interpolation = cv2.INTER_AREA)
+            templates.append(angka5)
+            angka6 = cv2.imread('angka/6.jpg', 0)
+            angka6 = cv2.resize(angka6,(28,28), interpolation = cv2.INTER_AREA)
+            templates.append(angka6)
+            angka7 = cv2.imread('angka/7.jpg', 0)
+            angka7 = cv2.resize(angka7,(28,28), interpolation = cv2.INTER_AREA)
+            templates.append(angka7)
+            angka8 = cv2.imread('angka/8.jpg', 0)
+            angka8 = cv2.resize(angka8,(28,28), interpolation = cv2.INTER_AREA)
+            templates.append(angka8)
+            angka9 = cv2.imread('angka/9.jpg', 0)
+            angka9 = cv2.resize(angka9,(28,28), interpolation = cv2.INTER_AREA)
+            templates.append(angka9)
+
+            angka = -1
+            angka_val = float("-inf") 
+
+            ii = 0
+            for template in templates:
+                method = eval('cv2.TM_CCOEFF')
+                img2 = img.copy()
+                # Apply template Matching
+                res = cv2.matchTemplate(img2, template, method)
+                min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)
+                if max_val > angka_val:
+                    angka_val = max_val
+                    angka = ii
+                ii+=1
+
+            pred =  "["+str(angka)+"]"
+            prediksi += pred
+
+        return prediksi
