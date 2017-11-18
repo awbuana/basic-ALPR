@@ -23,7 +23,7 @@ def number_segmentation(img_rgb):
     ret, gray= cv2.threshold(gray,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)
     img = gray
     
-    cv2.namedWindow("threshold seg",cv2.WINDOW_NORMAL)
+    # cv2.namedWindow("threshold seg",cv2.WINDOW_NORMAL)
     image,cnts,hierarchy = cv2.findContours(gray, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE) #bener
 
     cnts = sorted(cnts, key = cv2.contourArea, reverse = True)[:15]
@@ -165,7 +165,7 @@ def number_segmentation(img_rgb):
     list_angka_orig = []
 
     cv2.drawContours(img_rgb, cnts, -1, (0, 255, 0), 1)
-    cv2.imshow("threshold seg", img_rgb)
+    # cv2.imshow("threshold seg", img_rgb)
     
     
     # kumpulin list gambar angka sama save angka (debug) 
@@ -184,13 +184,15 @@ def number_segmentation(img_rgb):
         # row, col = crop.shape
         # npad = int(row/10)
         # pad = np.zeros((npad,col), np.uint8)
-        # crop = np.vstack((crop,pad))
+        # # crop = np.vstack((crop,pad))
         # crop = np.vstack((pad,crop))
+        
         # row, col = crop.shape
         # npad = int((row-col)/2)
         # pad = np.zeros((row,npad), np.uint8)
         # crop = np.hstack((crop,pad))
         # crop = np.hstack((pad,crop))
+        
         # print crop.shape
         # print "#"*10
 
@@ -223,10 +225,10 @@ def number_segmentation(img_rgb):
     print(str(count_kotak) +"kotak")
 
 
-    cv2.imshow("img black seg",img)
-    cv2.imshow("img rgb seg",img_rgb)
+    # cv2.imshow("img black seg",img)
+    # cv2.imshow("img rgb seg",img_rgb)
     
-    cv2.waitKey(0)
+    # cv2.waitKey(0)
 
     return (list_angka, list_angka_orig)
 

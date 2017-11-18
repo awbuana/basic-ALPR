@@ -11,9 +11,9 @@ from predict import predict_plate
 # Reading Image
 img = cv2.imread(sys.argv[1])
 print(img.shape)
-cv2.namedWindow("Original Image",cv2.WINDOW_NORMAL)
+# cv2.namedWindow("Original Image",cv2.WINDOW_NORMAL)
 # Creating a Named window to display image
-cv2.imshow("Original Image",img)
+# cv2.imshow("Original Image",img)
 # Display image
 
 def preprocess_image(img):
@@ -40,9 +40,9 @@ def preprocess_image(img):
 
     # Thresholding the image
     ret,thresh_image = cv2.threshold(sub_morp_image,100,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)
-    cv2.namedWindow("Image after Thresholding",cv2.WINDOW_NORMAL)
+    # cv2.namedWindow("Image after Thresholding",cv2.WINDOW_NORMAL)
     # Creating a Named window to display image
-    cv2.imshow("Image after Thresholding",thresh_image)
+    # cv2.imshow("Image after Thresholding",thresh_image)
     # Display Image
 
     #bersih bercak bercak
@@ -128,9 +128,9 @@ def get_data_rectangle(img,contours):
 
 
     # Drawing the selected contour on the original image
-    cv2.namedWindow("Image with Selected Contour",cv2.WINDOW_NORMAL)
+    # cv2.namedWindow("Image with Selected Contour",cv2.WINDOW_NORMAL)
     # Creating a Named window to display image
-    cv2.imshow("Image with Selected Contour",final)
+    # cv2.imshow("Image with Selected Contour",final)
 
     return (kumpulan_x, kumpulan_y,kumpulan_w, kumpulan_h) 
 
@@ -262,7 +262,7 @@ def crop_plat(kumpulan_x,kumpulan_y,kumpulan_w,kumpulan_h,xvalue,yvalue,img):
     c,d = yvalue[np.argmax(arr_kotak_y)]
     
     masked_img = img[(c-5):(d+5), a-5:b+5]
-    cv2.imshow('plat',masked_img)
+    # cv2.imshow('plat',masked_img)
     return masked_img
     #cv2.waitKey()
 
@@ -277,18 +277,31 @@ kumpulan_x, kumpulan_y,kumpulan_w, kumpulan_h = get_data_rectangle(img,cnts)
 x_area = horizontal_img_proc(thresh_image)
 y_area = vertical_img_proc(thresh_image)
 
-cv2.imshow('sebelum di crop',copy_img)
+# cv2.imshow('sebelum di crop',copy_img)
 #masked_img_binary = crop_plat(kumpulan_x,kumpulan_y,kumpulan_w,kumpulan_h,x_area,y_area,thresh_image)
 masked_img_rgb = crop_plat(kumpulan_x,kumpulan_y,kumpulan_w,kumpulan_h,x_area,y_area,copy_img)
 
 
 list_angka, list_angka_orig = number_segmentation(masked_img_rgb)
 
+img_pred1 = copy_img.copy()
+img_pred2 = copy_img.copy()
+
 prediksi = predict_plate(list_angka_orig, mnist=False)
 
 print("nomor plat =" + prediksi)
-cv2.putText(copy_img, str(prediksi), (20, 40),
+cv2.putText(img_pred1, str(prediksi), (20, 40),
 	cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0, 0, 255), 2)
 
-cv2.imshow('hasil akhir',copy_img)
+cv2.imshow('TEMPLATE',img_pred1)
+
+prediksi = predict_plate(list_angka, mnist=True)
+
+print("nomor plat =" + prediksi)
+cv2.putText(img_pred2, str(prediksi), (20, 40),
+	cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0, 0, 255), 2)
+
+cv2.imshow('MNIST',img_pred2)
+
+
 cv2.waitKey()

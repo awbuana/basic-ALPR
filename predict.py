@@ -131,20 +131,22 @@ def predict_plate(list_angka, mnist=True):
             templates.append(angka9)
 
             angka = -1
-            angka_val = float("-inf") 
+            angka_val = float("inf") 
 
             ii = 0
             for template in templates:
-                method = eval('cv2.TM_CCOEFF')
+                method = eval('cv2.TM_SQDIFF')
                 img2 = img.copy()
                 # Apply template Matching
                 res = cv2.matchTemplate(img2, template, method)
                 min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)
-                if max_val > angka_val:
+                if min_val < angka_val:
                     angka_val = max_val
                     angka = ii
+                print str(ii)+": "+str(max_val)
                 ii+=1
 
+            print angka_val
             pred =  "["+str(angka)+"]"
             prediksi += pred
 
