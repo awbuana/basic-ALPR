@@ -147,7 +147,7 @@ def predict_plate(list_angka, mnist=True):
                 ii+=1
 
             print angka_val
-            pred =  "["+str(angka)+"]"
+            pred =  str(angka)
             prediksi += pred
 
         return prediksi

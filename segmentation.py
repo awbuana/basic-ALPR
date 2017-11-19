@@ -176,7 +176,7 @@ def number_segmentation(img_rgb):
         # cv2.waitKey()
         crop = img[(y-1):(y+h+2), (x-1):(x+w+1)]
         orig = cv2.resize(crop,(28,28), interpolation = cv2.INTER_AREA)
-        cv2.imwrite("orig-" + str(i) + ".jpg", orig)
+        # cv2.imwrite("orig-" + str(i) + ".jpg", orig)
         list_angka_orig.append(orig)
 
         # print "#"*10
@@ -215,7 +215,7 @@ def number_segmentation(img_rgb):
         # res = cv2.morphologyEx(res, cv2.MORPH_CLOSE, kernel)
         
         res = deskew(res)
-        cv2.imwrite("angka-" + str(i) + ".jpg", res)
+        # cv2.imwrite("angka-" + str(i) + ".jpg", res)
         list_angka.append(res)
         #cv2.rectangle(img,(x,y),(x+w,y+h),(255,255,255),1)
         cv2.rectangle(img_rgb,(x,y),(x+w,y+h),(0,0,255),1)
