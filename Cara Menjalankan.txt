@@ -1,0 +1,5 @@
+ketik perintah
+# python find.py foto/[nama file]
+
+contoh
+# python find.py foto/plat1.jpg
