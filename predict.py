@@ -42,20 +42,22 @@ y_train = keras.utils.to_categorical(y_train, num_classes)
 y_test = keras.utils.to_categorical(y_test, num_classes)
 
 # model = Sequential()
-# model.add(Conv2D(32, kernel_size=(3, 3),
-#                 activation='relu',
-#                 input_shape=input_shape))
-# model.add(Conv2D(64, (3, 3), activation='relu'))
-# model.add(MaxPooling2D(pool_size=(2, 2)))
-# model.add(Dropout(0.25))
+# model.add(Conv2D(20, kernel_size=(5, 5),
+#                  activation='relu',
+#                  input_shape=input_shape))
+# model.add(MaxPooling2D(pool_size=(2, 2),strides=(2, 2)))
+
+# model.add(Conv2D(20, (5, 5), activation='relu'))
+# model.add(MaxPooling2D(pool_size=(2, 2),strides=(2, 2)))
+
 # model.add(Flatten())
-# model.add(Dense(128, activation='relu'))
-# model.add(Dropout(0.5))
+# model.add(Dense(500, activation='relu'))
+
 # model.add(Dense(num_classes, activation='softmax'))
 
 # model.compile(loss=keras.losses.categorical_crossentropy,
-#             optimizer=keras.optimizers.Adadelta(),
-#             metrics=['accuracy'])
+#               optimizer=keras.optimizers.Adadelta(),
+#               metrics=['accuracy'])
 
 
 model = Sequential()
@@ -70,11 +72,11 @@ model.add(MaxPooling2D(pool_size=(3, 3),strides=(3, 3)))
 model.add(Flatten())
 
 model.add(Dense(num_classes, activation='softmax'))
-
-
 model.compile(loss=keras.losses.categorical_crossentropy,
               optimizer=keras.optimizers.Adadelta(),
               metrics=['accuracy'])
+
+#model.load_weights("model_weights_4.h5")
 model.load_weights("model_weights_5_convnetjs.h5")
 
 def predict_plate(list_angka, mnist=True):
@@ -143,10 +145,10 @@ def predict_plate(list_angka, mnist=True):
                 if min_val < angka_val:
                     angka_val = max_val
                     angka = ii
-                print str(ii)+": "+str(max_val)
+                print (str(ii)+": "+str(max_val))
                 ii+=1
 
-            print angka_val
+            print (angka_val)
             pred =  str(angka)
             prediksi += pred
 

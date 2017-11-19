@@ -205,8 +205,8 @@ def number_segmentation(img_rgb):
         kernel = np.ones((2,2), np.uint8)
         res = cv2.erode(res,kernel,iterations = 3)
 
-        kernel = np.ones((5,5), np.uint8)
-        res = cv2.morphologyEx(res, cv2.MORPH_CLOSE, kernel)
+        # kernel = np.ones((5,5), np.uint8)
+        # res = cv2.morphologyEx(res, cv2.MORPH_CLOSE, kernel)
         
         
         # kernel = np.ones((1,1), np.uint8)
