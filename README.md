@@ -1,5 +1,6 @@
 # Basic-ALPR
 Number Recognition on License Plate using Python, OpenCV, Keras
+Data training: MNIST Handwritten digit
 
 ## Contributors
 1. Agni Wira Buana
@@ -7,8 +8,8 @@ Number Recognition on License Plate using Python, OpenCV, Keras
 3. M Izzan
 
 ## Output
-Menggunakan 2 metode Template Matching dan CNN
-[[https://raw.githubusercontent.com/awbuana/basic-ALPR/master/ALPR.JPG|alt=ALPR]]
+Menggunakan 2 metode Template Matching dan CNN LeNet
+![alpr](https://raw.githubusercontent.com/awbuana/basic-ALPR/master/ALPR.JPG)
 
 ## Packages
 ```
