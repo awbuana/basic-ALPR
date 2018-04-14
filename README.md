@@ -7,6 +7,11 @@ Data training: MNIST Handwritten digit
 2. Azmi (https://github.com/azminajid)
 3. M Izzan
 
+## How to Use
+```
+python find.py foto/[nama file]
+```
+
 ## Output
 Menggunakan 2 metode Template Matching dan CNN LeNet
 ![alpr](https://raw.githubusercontent.com/awbuana/basic-ALPR/master/ALPR.JPG)
